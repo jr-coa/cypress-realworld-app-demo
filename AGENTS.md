@@ -38,3 +38,40 @@ posting is requested.
 The current onboarding UI provides no live file explorer or usable generated localhost preview
 link. Do not invent UI controls or external URLs. Use verified artifacts and the access mechanisms
 actually available in the task.
+
+## Engineering tasks received through Slack
+
+When a task originates in Slack, follow
+`.agents/skills/cloud-task-delivery/SKILL.md`.
+
+Carry the task through investigation, implementation, verification,
+and a review-ready pull request:
+
+1. Preserve the originating Slack channel and thread identifiers.
+   Acknowledge the task in that thread and state the intended outcome.
+2. Read the report, inspect the relevant code and logs, and reproduce
+   the problem when possible. If reproduction fails, report the evidence
+   and uncertainty before making speculative changes.
+3. Implement a focused fix and add appropriate regression coverage.
+   Follow the repository's development and testing instructions.
+4. Verify the affected workflow in the running environment. For visible
+   changes, capture screenshots or a short video demonstrating the result.
+   Evidence must come from the actual implementation being submitted.
+5. Create or update one draft PR in
+   `jr-coa/cypress-realworld-app-demo`, targeting `develop`, unless the
+   task explicitly specifies otherwise. Do not merge without authorization.
+6. Inspect PR checks and address failures introduced by the change.
+7. Reply in the original Slack thread with:
+   - The problem and fix.
+   - The PR link and commit tested.
+   - Checks run, their results, and any verification gaps.
+   - Uploaded screenshots or video, or links accessible to the requester.
+   - Any remaining blocker or decision needed.
+
+Keep meaningful progress updates and subsequent task iteration in the
+same Slack thread. Reuse the existing PR while it remains appropriate.
+
+Do not claim completion without verification, invent evidence, or post
+cloud-local filesystem paths as accessible attachments. If Slack,
+artifact upload, credentials, or another required capability is unavailable,
+complete independent work and report the specific delivery blocker.
