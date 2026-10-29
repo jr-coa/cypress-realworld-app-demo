@@ -1,0 +1,43 @@
+{
+  "task_key": null,
+  "provider_task_id": null,
+  "phase": "intake",
+  "origin": {
+    "provider": "slack",
+    "team_id": null,
+    "channel_id": null,
+    "thread_ts": null,
+    "request_message_ts": null,
+    "permalink": null,
+    "requester_id": null
+  },
+  "target": {
+    "repository": "jr-coa/cypress-realworld-app-demo",
+    "base_branch": "develop",
+    "branch": null,
+    "pr_number": null,
+    "pr_url": null,
+    "head_sha": null
+  },
+  "acceptance_criteria": [],
+  "environment": {
+    "instance_id": null,
+    "observed_at": null,
+    "validation_scope": null,
+    "tool_versions": {},
+    "services_exercised": []
+  },
+  "verification": [],
+  "artifacts": [],
+  "ci": {
+    "head_sha": null,
+    "checks": []
+  },
+  "review": {
+    "reviewed_head_sha": null,
+    "actionable_threads": []
+  },
+  "last_slack_update": null,
+  "blockers": [],
+  "updated_at": null
+}
