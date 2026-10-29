@@ -1,7 +1,7 @@
 import * as React from "react";
 import { addDays, format as formatDate, startOfDay } from "date-fns";
 import TransactionDateRangeFilter from "./TransactionDateRangeFilter";
-import { endOfDayUTC } from "../utils/transactionUtils";
+import { endOfDayUTC, isoStringToLocalMidnightStart } from "../utils/transactionUtils";
 
 describe("Transaction Date Range Filter", () => {
   it("should default to ALL", () => {
@@ -34,8 +34,49 @@ describe("Transaction Date Range Filter", () => {
       />
     );
     cy.get("[data-test='transaction-list-filter-date-range-button']")
-      .should("contain", formatDate(new Date(dateRangeFilters.dateRangeStart), "MMM, d yyyy"))
-      .and("contain", formatDate(new Date(dateRangeFilters.dateRangeEnd), "MMM, d yyyy"));
+      .should(
+        "contain",
+        formatDate(isoStringToLocalMidnightStart(dateRangeFilters.dateRangeStart), "MMM, d yyyy")
+      )
+      .and(
+        "contain",
+        formatDate(isoStringToLocalMidnightStart(dateRangeFilters.dateRangeEnd), "MMM, d yyyy")
+      );
+  });
+
+  it("should update the displayed range when date range filters change", () => {
+    const filterDateRangeSpy = cy.spy();
+    const resetDateRangeSpy = cy.spy();
+    const dateRangeFilters = {
+      dateRangeStart: new Date("Jan 01 2018").toISOString(),
+      dateRangeEnd: new Date("Dec 05 2030").toISOString(),
+    };
+    const FilterWithUpdatedRange = () => {
+      const [filters, setFilters] = React.useState<Partial<typeof dateRangeFilters>>({});
+
+      return (
+        <>
+          <button data-test="set-date-range" onClick={() => setFilters(dateRangeFilters)} />
+          <TransactionDateRangeFilter
+            filterDateRange={filterDateRangeSpy}
+            dateRangeFilters={filters}
+            resetDateRange={resetDateRangeSpy}
+          />
+        </>
+      );
+    };
+
+    cy.mount(<FilterWithUpdatedRange />);
+    cy.get("[data-test='set-date-range']").click();
+    cy.get("[data-test='transaction-list-filter-date-range-button']")
+      .should(
+        "contain",
+        formatDate(isoStringToLocalMidnightStart(dateRangeFilters.dateRangeStart), "MMM, d yyyy")
+      )
+      .and(
+        "contain",
+        formatDate(isoStringToLocalMidnightStart(dateRangeFilters.dateRangeEnd), "MMM, d yyyy")
+      );
   });
 
   it("should set a date range filter", () => {
