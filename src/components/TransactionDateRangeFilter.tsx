@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import { format as formatDate } from "date-fns";
 import { Popover, Chip, useTheme, Drawer, Button, useMediaQuery, colors } from "@mui/material";
@@ -7,7 +7,11 @@ import Calendar from "react-calendar";
 
 import "react-calendar/dist/Calendar.css";
 import { TransactionDateRangePayload, Value, ValuePiece } from "../models";
-import { hasDateQueryFields, localDateToUTCISOString } from "../utils/transactionUtils";
+import {
+  hasDateQueryFields,
+  isoStringToLocalMidnightStart,
+  localDateToUTCISOString,
+} from "../utils/transactionUtils";
 
 const PREFIX = "TransactionListDateRangeFilter";
 
@@ -28,6 +32,11 @@ const Root = styled("div")(({ theme }) => ({
 
 const { indigo } = colors;
 
+const getCalendarValue = (dateRangeStart?: string, dateRangeEnd?: string): Value =>
+  dateRangeStart && dateRangeEnd
+    ? [isoStringToLocalMidnightStart(dateRangeStart), isoStringToLocalMidnightStart(dateRangeEnd)]
+    : null;
+
 export type TransactionListDateRangeFilterProps = {
   filterDateRange: Function;
   dateRangeFilters: TransactionDateRangePayload;
@@ -42,9 +51,17 @@ const TransactionListDateRangeFilter: React.FC<TransactionListDateRangeFilterPro
   const theme = useTheme();
   const xsBreakpoint = useMediaQuery(theme.breakpoints.only("xs"));
   const queryHasDateFields = dateRangeFilters && hasDateQueryFields(dateRangeFilters);
-  const [calendarValue, setCalendarValue] = useState<Value>(null);
+  const [calendarValue, setCalendarValue] = useState<Value>(() =>
+    getCalendarValue(dateRangeFilters.dateRangeStart, dateRangeFilters.dateRangeEnd)
+  );
 
   const [dateRangeAnchorEl, setDateRangeAnchorEl] = React.useState<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    setCalendarValue(
+      getCalendarValue(dateRangeFilters.dateRangeStart, dateRangeFilters.dateRangeEnd)
+    );
+  }, [dateRangeFilters.dateRangeStart, dateRangeFilters.dateRangeEnd]);
 
   const onCalendarSelect = (val: Value) => {
     if (val && !(val instanceof Date)) {
