@@ -123,6 +123,14 @@ The description must explain the problem, resulting behavior, compatibility, mat
 evidence obtained, and known limitations. Link the source issue/thread when appropriate to the
 repository's audience; do not copy confidential thread content or secrets into the PR.
 
+Include screenshots of the changed UI in the PR description as well as the Slack result.
+Capture the relevant workflow with Playwright MCP, showing before and after when useful.
+Embed or link screenshots through an authorized upload mechanism using URLs accessible to PR
+reviewers, and verify they render or can be opened from the PR. Local filesystem paths alone
+are insufficient. If capture or upload is blocked, state the specific blocker in the PR. For
+changes without a visible UI effect, explain why screenshots are not applicable and include
+the relevant verification evidence instead.
+
 Confirm the created PR and pushed head. Report its link in the original thread when a meaningful
 reviewable result exists, but continue the task: creating the PR is not the stopping condition.
 

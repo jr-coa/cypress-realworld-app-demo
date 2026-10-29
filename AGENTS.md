@@ -60,6 +60,8 @@ and a review-ready pull request:
 5. Create or update one draft PR in
    `jr-coa/cypress-realworld-app-demo`, targeting `develop`, unless the
    task explicitly specifies otherwise. Do not merge without authorization.
+   Include screenshots of visible changes in the PR description using links accessible to
+   reviewers, as well as in the Slack result. State any capture/upload blocker in the PR.
 6. Inspect PR checks and address failures introduced by the change.
 7. Reply in the original Slack thread with:
    - The problem and fix.
